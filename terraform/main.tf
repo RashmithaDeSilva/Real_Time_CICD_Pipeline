@@ -40,8 +40,14 @@ resource "docker_container" "sonarqube_container" {
 #     container_path = "/var/jenkins_home"
 #   }
 #   volumes {
+#     # Connect with docker
 #     host_path      = "/var/run/docker.sock"
 #     container_path = "/var/run/docker.sock"
+#   }
+#   volumes {
+#     # Connect with projects
+#     host_path      = "/Real_Time_CICD_Pipeline/jenkins_pipeline_scripts"
+#     container_path = "/projects"
 #   }
 #   ports {
 #     internal = 8080
