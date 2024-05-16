@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    
+    environment {
+        CONTAINER_NAME = 'CI_container'
+    }
+
+    stages {
+        stage('Stop old container') {
+            steps {
+                echo "[INFO] Step 1 start -------------------------------------------------------------------------------------"
+                echo "[INFO] Stop old container"
+                script {
+                    // Check container status
+                    def con_status = sh(script: "sudo docker ps -q -f name=${env.CONTAINER_NAME}", returnStdout: true).trim()
+                    sh"sudo docker ps -f name=${env.CONTAINER_NAME}"
+                    
+                    if (con_status) {
+                        // Kill if container is running
+                        sh "sudo docker kill ${env.CONTAINER_NAME}"
+                        sh"sudo docker ps -f name=${env.CONTAINER_NAME}"
+                    }
+                }
+                echo "[INFO] Step 1 complete ----------------------------------------------------------------------------------"
+            }
+        }
+
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+}
