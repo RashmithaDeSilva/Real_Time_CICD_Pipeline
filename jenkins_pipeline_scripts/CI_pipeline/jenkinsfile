@@ -74,7 +74,29 @@ pipeline {
                 echo "[INFO] Step 6 omplete -----------------------------------------------------------------------------------"
             }
         }
-        
+        stage('Sonarqube analysis') {
+            steps {
+                echo "[INFO] Step 7 start -------------------------------------------------------------------------------------"
+                echo "[INFO] Sonarqube analysis"
+                script {
+                    try {
+                        // Execute Docker command to get the IP address of the 'sonarqube' container
+                        // and store it in the 'sonar_ip' variable
+                        def sonar_ip = sh(
+                            script: "sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sonarqube",
+                            returnStdout: true
+                        ).trim() // Trim to remove any newline characters
+                        
+                        sh"sudo docker cp ${CI_container}:/home/scripts/sonar_analysis.sh ${CI_container}:/home/GitOps-CI"
+                        sh"sudo docker exec ${env.CONTAINER_NAME} sh /home/GitOps-CI/sonar_analysis.sh ${sonar_ip}"
+                        
+                    } catch (Exception e) {
+                        echo "Failed to get SonarQube IP: ${e.getMessage()}"
+                    }
+                }
+                echo "[INFO] Step 7 complete -----------------------------------------------------------------------------------"
+            }
+        }
         
         
         
