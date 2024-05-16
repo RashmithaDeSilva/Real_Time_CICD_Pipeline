@@ -58,6 +58,14 @@ pipeline {
                 echo "[INFO] Step 4 complete ----------------------------------------------------------------------------------"
             }
         }
+        stage('Git Checkout') {
+            steps {
+                echo "[INFO] Step 5 start -------------------------------------------------------------------------------------"
+                echo "[INFO] Clone repo 'https://github.com/jaiswaladi246/GitOps-CI.git'"
+                sh "sudo docker exec ${env.CONTAINER_NAME} sh /home/scripts/clone_project.sh"
+                echo "[INFO] Step 5 omplete -----------------------------------------------------------------------------------"
+            }
+        }
         
         
         
