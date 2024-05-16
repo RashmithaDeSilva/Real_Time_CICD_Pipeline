@@ -24,7 +24,25 @@ pipeline {
                 echo "[INFO] Step 1 complete ----------------------------------------------------------------------------------"
             }
         }
-
+        stage('Remove old container') {
+            steps {
+                echo "[INFO] Step 2 start -------------------------------------------------------------------------------------"
+                echo "[INFO] Remove old container"
+                script {
+                    // Check container status
+                    def con_status = sh(script: "sudo docker ps -q -a -f name=${env.CONTAINER_NAME}", returnStdout: true).trim()
+                    sh"sudo docker ps -a -f name=${env.CONTAINER_NAME}"
+                    
+                    if (con_status) {
+                        // Remove container if stoped
+                        sh "sudo docker rm ${env.CONTAINER_NAME}"
+                        sh"sudo docker ps -a -f name=${env.CONTAINER_NAME}"
+                    }
+                }
+                echo "[INFO] Step 2 complete ----------------------------------------------------------------------------------"
+            }
+        }
+        
         
         
         
