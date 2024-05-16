@@ -50,6 +50,14 @@ pipeline {
                 echo "[INFO] Step 3 complete ----------------------------------------------------------------------------------"
             }
         }
+        stage('Setup container') {
+            steps {
+                echo "[INFO] Step 4 start -------------------------------------------------------------------------------------"
+                echo "[INFO] Setup container"
+                sh "sudo docker cp /projects/Real_Time_CICD_Pipeline/scripts ${env.CONTAINER_NAME}:/home"
+                echo "[INFO] Step 4 complete ----------------------------------------------------------------------------------"
+            }
+        }
         
         
         
