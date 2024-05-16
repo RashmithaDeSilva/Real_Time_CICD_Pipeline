@@ -66,6 +66,14 @@ pipeline {
                 echo "[INFO] Step 5 omplete -----------------------------------------------------------------------------------"
             }
         }
+        stage('Maven complie project') {
+            steps {
+                echo "[INFO] Step 6 start -------------------------------------------------------------------------------------"
+                echo "[INFO] Maven complie project"
+                sh "sudo docker exec ${env.CONTAINER_NAME} sh /home/scripts/compile_project.sh"
+                echo "[INFO] Step 6 omplete -----------------------------------------------------------------------------------"
+            }
+        }
         
         
         
