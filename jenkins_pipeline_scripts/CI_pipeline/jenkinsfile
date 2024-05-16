@@ -42,6 +42,14 @@ pipeline {
                 echo "[INFO] Step 2 complete ----------------------------------------------------------------------------------"
             }
         }
+        stage('Spinup container') {
+            steps {
+                echo "[INFO] Step 3 start -------------------------------------------------------------------------------------"
+                echo "[INFO] Spinup container"
+                sh "sudo docker run -itd --name ${env.CONTAINER_NAME} -p 3000:8070 openjdk:11"
+                echo "[INFO] Step 3 complete ----------------------------------------------------------------------------------"
+            }
+        }
         
         
         
