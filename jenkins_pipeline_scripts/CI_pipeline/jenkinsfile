@@ -62,7 +62,7 @@ pipeline {
             steps {
                 echo "[INFO] Step 5 start -------------------------------------------------------------------------------------"
                 echo "[INFO] Clone repo 'https://github.com/jaiswaladi246/GitOps-CI.git'"
-                sh "sudo docker exec ${env.CONTAINER_NAME} sh /home/scripts/clone_project.sh"
+                sh "sudo docker exec ${env.CONTAINER_NAME} bash /home/scripts/clone_project.sh"
                 echo "[INFO] Step 5 omplete -----------------------------------------------------------------------------------"
             }
         }
@@ -70,7 +70,7 @@ pipeline {
             steps {
                 echo "[INFO] Step 6 start -------------------------------------------------------------------------------------"
                 echo "[INFO] Maven complie project"
-                sh "sudo docker exec ${env.CONTAINER_NAME} sh /home/scripts/compile_project.sh"
+                sh "sudo docker exec ${env.CONTAINER_NAME} bash /home/scripts/compile_project.sh"
                 echo "[INFO] Step 6 omplete -----------------------------------------------------------------------------------"
             }
         }
@@ -87,8 +87,7 @@ pipeline {
                             returnStdout: true
                         ).trim() // Trim to remove any newline characters
                         
-                        sh"sudo docker cp ${CI_container}:/home/scripts/sonar_analysis.sh ${CI_container}:/home/GitOps-CI"
-                        sh"sudo docker exec ${env.CONTAINER_NAME} sh /home/GitOps-CI/sonar_analysis.sh ${sonar_ip}"
+                        sh"sudo docker exec ${env.CONTAINER_NAME} bash /home/scripts/sonar_analysis.sh ${sonar_ip}"
                         
                     } catch (Exception e) {
                         echo "Failed to get SonarQube IP: ${e.getMessage()}"
